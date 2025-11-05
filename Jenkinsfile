@@ -1,5 +1,5 @@
 pipeline {
-    agent { dockerfile true }
+    agent any
 
     environment {
         IMAGE_NAME = "pokemon-api"
@@ -26,7 +26,6 @@ pipeline {
                 echo "Desplegando la aplicación..."
                 
                 sh "docker stop ${CONTAINER_NAME} || true"
-                
                 sh "docker rm ${CONTAINER_NAME} || true"
                 
                 echo "Iniciando nuevo contenedor..."
@@ -40,7 +39,7 @@ pipeline {
     post {
         success {
             echo "Pipeline finalizado con éxito."
-            echo "Accede a la aplicación en: http://<IP_DE_JENKINS>:8090/pokemons"
+            echo "Accede a la aplicación en: http://<IP_DE_JENKINS_HOST>:8090/pokemons"
         }
         failure {
             echo "El pipeline ha fallado."
